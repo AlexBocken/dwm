@@ -1776,6 +1776,8 @@ tagmon(const Arg *arg)
 {
 	if (!selmon->sel || !mons->next)
 		return;
+	if (selmon->sel->isfullscreen)
+		setfullscreen(selmon->sel, 0);
 	unsigned int sel_sp_tags = selmon->sel->tags & SPTAGMASK;
 	if (sel_sp_tags) {
 		//add all tags of scratchpad client to new mon
