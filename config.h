@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
-static const unsigned int borderfloatpx  = 2;        /* border pixel of windows which are floating; seems not correctly implemented yet! window freezes if toggled to floating if different to borderpx*/
+static const unsigned int borderfloatpx = 1;        /* border pixel of windows which are floating*/
 static int dowarp = 1;				/* default behaviour of mouse. Can be chaned via calling togglewarp*/
 static const unsigned int snap      = 10;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -52,15 +52,17 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "scratchpadterm", "-t", "Scratchpad", "-g", "120x34", NULL };
-const char *spcmd2[] = {"st", "-n", "scratchcalc", "-t", "Calculator", "-g", "120x34", "-e", "dropdowncalc", NULL };
-const char *spcmd3[] = {"st", "-n", "matrix", "-A", "0.1", "-e", "weechat", NULL };
+const char *spcmd1[] = {"st", "-A", "0.3", "-n", "scratchpadterm", "-t", "Scratchpad", "-g", "120x34", NULL };
+const char *spcmd2[] = {"st", "-A", "0.3", "-n", "scratchcalc", "-t", "Calculator", "-g", "120x34", "-e", "dropdowncalc", NULL };
+const char *spcmd3[] = {"st", "-n", "matrix_ethno", "-A", "0.1", "-t", "Ethno", "-e", "gomuks_profile", "ethno", NULL};
+const char *spcmd4[] = {"st", "-n", "matrix_alpenrunde", "-A", "0.1", "-t", "Alpenrunde" , "-e", "gomuks_profile", "alpenrunde", NULL };
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
 	{"scratchpad",    spcmd1},
 	{"dropdowncalc",      spcmd2},
-	{"matrix",	spcmd3},
+	{"matrix_ethno", spcmd3},
+	{"matrix_alpenrunde",	spcmd4},
 };
 
 /* tagging */
@@ -78,7 +80,8 @@ static const Rule rules[] = {
 	{ "Firefox",  	  NULL,			NULL,		1 << 8,			0,		-1 },
 	{ NULL,		  "scratchpadterm",	NULL,		SPTAG(0),		1,		-1 },
 	{ NULL,		  "scratchcalc",       NULL,		SPTAG(1),		1,		-1 },
-	{ NULL,		  "matrix",       NULL,		SPTAG(2),		0,		-1 },
+	{ NULL,		  "matrix_ethno",       NULL,		SPTAG(2),		0,		-1 },
+	{ NULL,		  "matrix_alpenrunde",       NULL,		SPTAG(3),		0,		-1 },
 
 };
 
@@ -141,7 +144,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_minus,	spawn,		SHCMD("lmc down 15 ; pkill -RTMIN+10 dwmblocks") },
 	{ MODKEY,			XK_equal,	spawn,		SHCMD("lmc up 5 ; pkill -RTMIN+10 dwmblocks") },
 	{ MODKEY|ShiftMask,		XK_equal,	spawn,		SHCMD("lmc up 15; pkill -RTMIN+10 dwmblocks") },
-	/* { MODKEY,			XK_BackSpace,	spawn,		SHCMD("") }, */
+	{ MODKEY,			XK_BackSpace,	spawn,		SHCMD("prompt \"Hibernate computer?\" \" sudo systemctl hibernate\"") },
 	{ MODKEY|ShiftMask,		XK_BackSpace,	spawn,		SHCMD("prompt \"Reboot computer?\" \"sudo -A reboot\"") },
 	{ MODKEY,			XK_Tab,		view,		{0} },
 	/* { MODKEY|ShiftMask,		XK_Tab,		spawn,		SHCMD("") }, */
@@ -153,9 +156,9 @@ static Key keys[] = {
 	{ MODKEY,			XK_e,		spawn,		SHCMD("st -e neomutt -e 'set sidebar_visible = no'; pkill -RTMIN+13 dwmblocks") },
 	{ MODKEY|ShiftMask,		XK_e,		togglescratch,	{.ui = 2 } },
 
-	//{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD("element-desktop") },
+	/* { MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD("element-desktop") }, */
 	{ MODKEY,			XK_r,		spawn,		SHCMD("st -e $FILE") },
-	{ MODKEY|ShiftMask,		XK_r,		spawn,		SHCMD("element-desktop --profile alpenrunde") },
+	{ MODKEY|ShiftMask,		XK_r,		togglescratch,	{.ui = 3}},
 	{ MODKEY,			XK_t,		setlayout,	{.v = &layouts[0]} },
 	{ MODKEY|ShiftMask,		XK_t,		setlayout,	{.v = &layouts[1]} },
 	{ MODKEY,			XK_y,		setlayout,	{.v = &layouts[2]} },
@@ -209,7 +212,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_v,		spawn,		SHCMD("st -e $EDITOR -c \"VimwikiIndex\"") },
 	{ MODKEY|ShiftMask,		XK_v,		setfloating,	{ .i=True} },
 	{ MODKEY|ShiftMask,		XK_v,		setsticky,	{.i=True} },
-	{ ControlMask|ShiftMask,	XK_v,		spawn,		SHCMD("xclip -selection 'primary' -o | xvkbd -xsendevent -file -")},
+	{ ControlMask|ShiftMask,	XK_v,		spawn,		SHCMD("xdotool type $(xclip -o)")},
 	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD("hover left") },
 	{ MODKEY,			XK_b,		spawn,		SHCMD("bt") },
 	{ MODKEY|ShiftMask,		XK_b,		togglebar,	{0} },
@@ -256,7 +259,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Scroll_Lock,	spawn,		SHCMD("killall screenkey || screenkey &") },
 
-	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("lmc toggle; pkill -RTMIN+10 dwmblocks") },
+	{ 0, XF86XK_AudioMute,		spawn,		SHCMD("lmc mute; pkill -RTMIN+10 dwmblocks") },
 	{ 0, XF86XK_AudioRaiseVolume,	spawn,		SHCMD("lmc up 5; pkill -RTMIN+10 dwmblocks") },
 	{ 0, XF86XK_AudioLowerVolume,	spawn,		SHCMD("lmc down 5; pkill -RTMIN+10 dwmblocks") },
 	{ 0, XF86XK_AudioPrev,		spawn,		SHCMD("mpc prev") },
