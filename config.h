@@ -9,9 +9,12 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 20;       /* horizontal padding of bar */
-static const char *fonts[]          = { "monospace:size=13",
+static const char *fonts[]          = {
+					"monospace:size=13",
 					"IPAGothic:size=13",
-					"symbola:size=13"};
+					"symbola:size=12",
+					"Font Awesome 6 Free Solid:size=10"
+					};
 static const char dmenufont[]       = "monospace:size=13";
 #define bblack "#000000"
 #define nord0 "#2E3440"
@@ -203,7 +206,7 @@ static Key keys[] = {
 	/* { MODKEY|ShiftMask,		XK_apostrophe,	spawn,		SHCMD("") }, */
 	{ MODKEY,			XK_Return,	spawn,		{.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_Return,	togglescratch,	{.ui = 0 } },
-	{ MODKEY,			XK_z,		spawn,		SHCMD("st -e tremc") },
+	{ MODKEY,			XK_z,		spawn,		SHCMD("st -e tremc --skip-version-check") },
 	/*{ MODKEY|ShiftMask,			XK_z,		spawn,		SHCMD("st -e tremc") },*/
 	{ MODKEY,			XK_x,		spawn,		SHCMD("slock & ( sleep 4; xset dpms force off; mpc pause ; pauseallmpv)") },
 	{ MODKEY|ShiftMask,		XK_x,		spawn,		SHCMD("prompt \"Shutdown computer?\" \"sudo -A shutdown -h now\"") },
