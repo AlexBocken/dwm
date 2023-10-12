@@ -62,7 +62,7 @@ static Sp scratchpads[] = {
 	{"scratchpad",    spcmd1},
 	{"dropdowncalc",      spcmd2},
 	{"matrix_ethno", spcmd3},
-	{"matrix_alpenrunde",	spcmd4},
+	{"matrix_bocken",	spcmd4},
 };
 
 /* tagging */
@@ -81,7 +81,7 @@ static const Rule rules[] = {
 	{ NULL,		  "scratchpadterm",	NULL,		SPTAG(0),		1,		-1 },
 	{ NULL,		  "scratchcalc",       NULL,		SPTAG(1),		1,		-1 },
 	{ NULL,		  "matrix_ethno",       NULL,		SPTAG(2),		0,		-1 },
-	{ NULL,		  "matrix_alpenrunde",       NULL,		SPTAG(3),		0,		-1 },
+	{ NULL,		  "matrix_bocken",       NULL,		SPTAG(3),		0,		-1 },
 
 };
 
