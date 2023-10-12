@@ -55,7 +55,7 @@ typedef struct {
 const char *spcmd1[] = {"st", "-A", "0.3", "-n", "scratchpadterm", "-t", "Scratchpad", "-g", "120x34", NULL };
 const char *spcmd2[] = {"st", "-A", "0.3", "-n", "scratchcalc", "-t", "Calculator", "-g", "120x34", "-e", "dropdowncalc", NULL };
 const char *spcmd3[] = {"st", "-n", "matrix_ethno", "-A", "0.1", "-t", "Ethno", "-e", "gomuks_profile", "ethno", NULL};
-const char *spcmd4[] = {"st", "-n", "matrix_alpenrunde", "-A", "0.1", "-t", "Alpenrunde" , "-e", "gomuks_profile", "alpenrunde", NULL };
+const char *spcmd4[] = {"st", "-n", "matrix_bocken", "-A", "0.1", "-t", "Bocken" , "-e", "gomuks_profile", "bocken", NULL };
 
 static Sp scratchpads[] = {
 	/* name          cmd  */
@@ -252,8 +252,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },
 	{ MODKEY|ShiftMask,		XK_space,	setsticky,	{.i = False} },
 //{ ControlMask,			XK_space,	spawn,		SHCMD("dunstctl close-all")},
-	{ 0,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
-	{ ShiftMask,			XK_Print,	spawn,		SHCMD("maimpick") },
+	{ 0,			XK_Print,	spawn,		SHCMD("maimpick") },
+	{ ShiftMask,				XK_Print,	spawn,		SHCMD("maim pic-full-$(date '+%y%m%d-%H%M-%S').png") },
 	{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord") },
 	{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("dmenurecord kill") },
 	{ MODKEY,			XK_Delete,	spawn,		SHCMD("dmenurecord kill") },
