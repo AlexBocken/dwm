@@ -12,8 +12,8 @@ static const int sidepad            = 20;       /* horizontal padding of bar */
 static const char *fonts[]          = {
 					"monospace:size=13",
 					"IPAGothic:size=13",
+					"Font Awesome 6 Free Solid:size=11",
 					"symbola:size=12",
-					"Font Awesome 6 Free Solid:size=10"
 					};
 static const char dmenufont[]       = "monospace:size=13";
 #define bblack "#000000"
@@ -219,7 +219,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD("hover left") },
 	{ MODKEY,			XK_b,		spawn,		SHCMD("bt") },
 	{ MODKEY|ShiftMask,		XK_b,		togglebar,	{0} },
-	{ MODKEY,			XK_n,		spawn,		SHCMD("st -e newsboat; pkill -RTMIN+13 dwmblocks") },
+	{ MODKEY,			XK_n,		spawn,		SHCMD("pkill newsboat; st -e newsboat; pkill -RTMIN+13 dwmblocks") },
 	{ MODKEY|ShiftMask,		XK_n,		setfloating,	{ .i=True}	 },
 	{ MODKEY|ShiftMask,		XK_n,		setsticky,	{.i=True}	 },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD("hover right") },
