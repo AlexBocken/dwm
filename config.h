@@ -287,10 +287,10 @@ static Key keys[] = {
 	{ 0, XF86XK_TouchpadToggle,	spawn,		SHCMD("(synclient | grep 'TouchpadOff.*1' && synclient TouchpadOff=0) || synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOff,	spawn,		SHCMD("synclient TouchpadOff=1") },
 	{ 0, XF86XK_TouchpadOn,		spawn,		SHCMD("synclient TouchpadOff=0") },
-	{ 0,	XF86XK_MonBrightnessUp,	spawn,		SHCMD("bright inc 5; pkill -RTMIN+2 dwmblocks") },
-	{ 0,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("bright dec 5; pkill -RTMIN+2 dwmblocks") },
-	{ ShiftMask,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("bright set 1; pkill -RTMIN+2 dwmblocks") },
-	{ ShiftMask,	XF86XK_MonBrightnessUp,	spawn,		SHCMD("bright set 100; pkill -RTMIN+2 dwmblocks") },
+	{ 0,	XF86XK_MonBrightnessUp,	spawn,		SHCMD("sb-bright +5") },
+	{ 0,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("sb-bright -5;") },
+	{ ShiftMask,	XF86XK_MonBrightnessDown,	spawn,		SHCMD("sb-bright 1") },
+	{ ShiftMask,	XF86XK_MonBrightnessUp,	spawn,		SHCMD("sb-bright 100") },
 
 };
 
