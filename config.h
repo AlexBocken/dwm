@@ -274,7 +274,9 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRewind,	spawn,		SHCMD("mpc seek -10") },
 	{ 0, XF86XK_AudioForward,	spawn,		SHCMD("mpc seek +10") },
 	{ 0, XF86XK_AudioMedia,		spawn,		SHCMD("st -e ncmpcpp") },
-	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("[ \"$(printf \"No\\nYes\" | dmenu -i -nb darkred -sb red -sf white -nf gray -p \"Shutdown computer?\")\" = Yes ] && sudo -A shutdown -h now") },
+	{ 0, XF86XK_Display,		spawn, 		SHCMD("displayselect")},
+
+	{ 0, XF86XK_PowerOff,		spawn,		SHCMD("[ \"$(printf \"No\\nYes\" | dmenu -i -n -nb darkred -sb red -sf white -nf gray -p \"Shutdown computer?\")\" = Yes ] && sudo -A shutdown -h now") },
 	{ 0, XF86XK_Calculator,		spawn,		SHCMD("st -e bc -l") },
 	{ 0, XF86XK_Sleep,		spawn,		SHCMD("sudo -A zzz") },
 	{ 0, XF86XK_WWW,		spawn,		SHCMD("$BROWSER") },
