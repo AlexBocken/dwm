@@ -12,8 +12,8 @@ static const int sidepad            = 20;       /* horizontal padding of bar */
 static const char *fonts[]          = {
 					"monospace:size=13",
 					"IPAGothic:size=13",
-					"Font Awesome 6 Free Solid:size=11",
-					"symbola:size=12",
+					"RecMonoLinear Nerd Font:size=11",
+					"symbola:size=13",
 					};
 static const char dmenufont[]       = "monospace:size=13";
 #define bblack "#000000"
