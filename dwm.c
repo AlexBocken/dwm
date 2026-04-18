@@ -689,7 +689,7 @@ deck(Monitor *m) {
 		return;
 	if (n == 1){
 		c = nexttiled(m->clients);
-		altw = WIDTH(c) * m->wh / HEIGHT(c); /*use max window height but preserve aspect ratio */
+		altw = c->maxa > 0 ? m->wh * c->maxa : WIDTH(c) * m->wh / HEIGHT(c);
 		if ( c->mina > 0 && altw < c->mon->mw ){
 			nx = m->mx + (m->mw - altw ) / 2;
 			resize(c, nx , c->y, altw , c->h, 0);
@@ -700,7 +700,7 @@ deck(Monitor *m) {
 		mw = m->nmaster ? m->ww * m->mfact : 0;
 		if ( m->nmaster == 1){
 			c = nexttiled(m->clients);
-			altw = WIDTH(c) * m->wh / HEIGHT(c); /*use max window height but preserve aspect ratio */
+			altw = c->maxa > 0 ? m->wh * c->maxa : WIDTH(c) * m->wh / HEIGHT(c);
 			mw = c->mina > 0 && altw < mw ? altw : mw;
 		}
 		snprintf(m->ltsymbol, sizeof m->ltsymbol, "[%d]", n - m->nmaster);
@@ -1315,7 +1315,14 @@ propertynotify(XEvent *e)
 				arrange(c->mon);
 			break;
 		case XA_WM_NORMAL_HINTS:
-			updatesizehints(c);
+			{
+				float oldmina = c->mina, oldmaxa = c->maxa;
+				updatesizehints(c);
+				if ((c->mina != oldmina || c->maxa != oldmaxa)
+				    && !c->isfloating
+				    && c->mon->lt[c->mon->sellt]->arrange)
+					arrange(c->mon);
+			}
 			break;
 		case XA_WM_HINTS:
 			updatewmhints(c);
@@ -1802,7 +1809,7 @@ tile(Monitor *m)
 		return;
 	if (n == 1){
 		c = nexttiled(m->clients);
-		altw = WIDTH(c) * m->wh / HEIGHT(c); /*use max window height but preserve aspect ratio */
+		altw = c->maxa > 0 ? m->wh * c->maxa : WIDTH(c) * m->wh / HEIGHT(c);
 		if ( c->mina > 0 && altw < c->mon->mw ){
 			nx = m->mx + (m->mw - altw ) / 2;
 			resize(c, nx , c->y, altw , c->h, 0);
@@ -1814,7 +1821,7 @@ tile(Monitor *m)
 		mw = m->nmaster ? m->ww * m->mfact : 0;
 		if ( m->nmaster == 1){
 			c = nexttiled(m->clients);
-			altw = WIDTH(c) * m->wh / HEIGHT(c); /*use max window height but preserve aspect ratio */
+			altw = c->maxa > 0 ? m->wh * c->maxa : WIDTH(c) * m->wh / HEIGHT(c);
 			mw = c->mina > 0 && altw < mw ? altw : mw;
 		}
 	}
@@ -2662,7 +2669,7 @@ fibonacci(Monitor *mon, int s) {
 			}
 			if(i == 0)
 			{
-				unsigned int altw = WIDTH(c) * mon->wh / HEIGHT(c); /*use max window height but preserve aspect ratio */
+				unsigned int altw = c->maxa > 0 ? mon->wh * c->maxa : WIDTH(c) * mon->wh / HEIGHT(c);
 				if(n == 1){
 					//if window has min aspect ratio (aka not infinitely adjustable to screen), center that window
 					if ( c->mina > 0 && altw < c->mon->mw ){
